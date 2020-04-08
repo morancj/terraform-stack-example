@@ -1,3 +1,4 @@
-# morancj Template
+# Terraform Example stacks
 
-Settings for Git and editors popular with [morancj](https://github.com/morancj/).
+Example stacks for static hosting, very much a WIP!
+

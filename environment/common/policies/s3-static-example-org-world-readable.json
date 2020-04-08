@@ -1,0 +1,25 @@
+{
+  "Version": "2008-10-17",
+  "Id": "PolicyForCloudFrontPublicContent",
+  "Statement": [
+    {
+      "Sid": "1",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::static-example.org",
+        "arn:aws:s3:::static-example.org/*"
+      ]
+    },
+    {
+      "Sid": "2",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ABCDEFGHI0123"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::static-example.org/*"
+    }
+  ]
+}
