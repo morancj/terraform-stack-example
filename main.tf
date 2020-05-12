@@ -47,7 +47,7 @@ module "example_net" {
   }
 
   // Variables
-  source = "environment/common/stacks/static-website-tld/"
+  source = "./environment/common/stacks/static-website-tld/"
 
   aws_route53_zone {
     name    = "example.net"
@@ -67,7 +67,7 @@ module "account_one" {
     aws = "aws.account_one"
   }
 
-  source = "account/common/"
+  source = "./account/common"
 }
 
 module "account_two" {
@@ -75,5 +75,5 @@ module "account_two" {
     aws = "aws.account_two"
   }
 
-  source = "account/two/"
+  source = "./account/account_two"
 }
