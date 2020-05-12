@@ -1,25 +1,25 @@
 // AWS Accounts used. Passed from parent.
-provider "aws" {
+provider aws {
   alias = "static-website-account"
 }
 
-provider "aws" {
+provider aws {
   alias = "route53-account"
 }
 
-provider "aws" {
+provider aws {
   alias = "acm-account"
 }
 
-provider "aws" {
+provider aws {
   alias = "lambda-account"
 }
 
-provider "aws" {
+provider aws {
   alias = "iam-account"
 }
 
-provider "aws" {
+provider aws {
   alias = "git-account"
 }
 
@@ -33,7 +33,7 @@ variable "environments" {
 }
 
 variable "aws_route53_zone" {
-  type        = "map"
+  type        = map(string)
   description = "Name of Route53 Zone to create/update. Must contain at least populated values for `name` and `comment`."
 }
 

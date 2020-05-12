@@ -16,7 +16,7 @@
       "Sid": "2",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ABCDEFGHI0123"
+        "aws": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ABCDEFGHI0123"
       },
       "Action": "s3:GetObject",
       "Resource": "arn:aws:s3:::static-example.org/*"

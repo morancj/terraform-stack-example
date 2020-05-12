@@ -5,16 +5,16 @@ data "aws_iam_policy_document" "buildbot_trust_relationship" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "AWS"
+      type        = "aws"
       identifiers = ["${var.iam_role_buildbot_arn}"]
     }
   }
 }
 
 resource "aws_iam_role" "buildbot" {
-  name               = "${var.iam_role_buildbot_name}"
+  name               = var.iam_role_buildbot_name
   description        = "Static website buildbot target Role"
-  assume_role_policy = "${data.aws_iam_policy_document.buildbot_trust_relationship.json}"
+  assume_role_policy = data.aws_iam_policy_document.buildbot_trust_relationship.json
 }
 
 // Actions permitted to the buildbot Role in this Account
@@ -68,12 +68,12 @@ data "aws_iam_policy_document" "buildbot_access_s3" {
 resource "aws_iam_policy" "buildbot_access_s3" {
   name        = "buildbot_access_s3"
   description = "S3 bucket and object access"
-  policy      = "${data.aws_iam_policy_document.buildbot_access_s3.json}"
+  policy      = data.aws_iam_policy_document.buildbot_access_s3.json
 }
 
 resource "aws_iam_role_policy_attachment" "buildbot_access_s3" {
-  role       = "${aws_iam_role.buildbot.name}"
-  policy_arn = "${aws_iam_policy.buildbot_access_s3.arn}"
+  role       = aws_iam_role.buildbot.name
+  policy_arn = aws_iam_policy.buildbot_access_s3.arn
 }
 
 # Access to wildcard resources
@@ -136,12 +136,12 @@ data "aws_iam_policy_document" "buildbot_access_common" {
 resource "aws_iam_policy" "buildbot_access_common" {
   name        = "buildbot_access_common"
   description = "Services required by the buildbot regardless of S3 bucket"
-  policy      = "${data.aws_iam_policy_document.buildbot_access_common.json}"
+  policy      = data.aws_iam_policy_document.buildbot_access_common.json
 }
 
 resource "aws_iam_role_policy_attachment" "buildbot_access_common" {
-  role       = "${aws_iam_role.buildbot.name}"
-  policy_arn = "${aws_iam_policy.buildbot_access_common.arn}"
+  role       = aws_iam_role.buildbot.name
+  policy_arn = aws_iam_policy.buildbot_access_common.arn
 }
 
 # resource "aws_iam_policy" "buildbot_assume_role" {
@@ -157,4 +157,3 @@ resource "aws_iam_role_policy_attachment" "buildbot_access_common" {
 // and
 // `data "aws_iam_policy_document" "CI_CD_bot"`
 // bindings.
-

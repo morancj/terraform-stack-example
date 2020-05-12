@@ -1,19 +1,19 @@
 // This should be a list after the Terraform 0.12 upgrade
 variable "environment" {
-  type    = "string"
+  type    = string
   default = "redirect"
 }
 
 // Comment can be derived from environment, but can't because
 # // we're using Terraform < 0.12
 # variable "comment" {
-#   type = "list"
+#   type = list
 # }
 
 // This could be a map after the Terraform 0.12 upgrade
 variable "aliases" {
-  # type = "map"
-  type        = "list"
+  # type = map
+  type        = list
   description = "Alternate names this CloudFront Web Distribution should serve."
 }
 
@@ -23,7 +23,7 @@ variable "domain_name" {
 
 // This should be a list after the Terraform 0.12 upgrade
 variable "origin_domain_name" {
-  type        = "string"
+  type        = string
   description = "Generally this will be the relevant S3 bucket's regional website endpoint DNS name."
 }
 

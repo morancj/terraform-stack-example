@@ -4,7 +4,7 @@
 // Common setup
 module "route53-zone" {
   providers = {
-    "aws" = "aws.route53-account"
+    aws = aws.route53-account
   }
 
   source = "../../modules/route53-zone"
@@ -16,7 +16,7 @@ module "route53-zone" {
 
 module "s3-bucket-log-bucket" {
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   source = "../../modules/s3-bucket-log-bucket"
@@ -27,7 +27,7 @@ module "s3-bucket-log-bucket" {
 
 module "iam-website-buildbot" {
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   source = "../../modules/iam-website-buildbot"

@@ -3,7 +3,7 @@
 // Zone apex to `www.` redirect
 module "s3-bucket-website-redirect" {
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   source = "../../modules/s3-bucket-website-redirect"
@@ -18,7 +18,7 @@ module "cloudfront-distribution-website-redirect" {
   source = "../../modules/cloudfront-distribution-website-redirect"
 
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   environment = "redirect"
@@ -48,8 +48,8 @@ module "acm-redirect" {
   source = "github.com/morancj/terraform-aws-acm-certificate?ref=0.1.2"
 
   providers = {
-    aws.acm_account     = "aws.static-website-account"
-    aws.route53_account = "aws.acm-account"
+    aws.acm_account     = aws.static-website-account
+    aws.route53_account = aws.acm-account
   }
 
   domain_name = "redirect.${module.route53-zone.default["name"]}"
@@ -64,7 +64,7 @@ module "acm-redirect" {
 
 module "route53-records-redirect" {
   providers = {
-    "aws" = "aws.route53-account"
+    aws = aws.route53-account
   }
 
   source = "../../modules/route53-alias-website"
@@ -83,7 +83,7 @@ module "route53-records-redirect" {
 
 module "route53-records-apex" {
   providers = {
-    "aws" = "aws.route53-account"
+    aws = aws.route53-account
   }
 
   source = "../../modules/route53-alias-website"
@@ -104,7 +104,7 @@ module "route53-records-apex" {
 // production/www hosting
 module "s3-bucket-website-production" {
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   source = "../../modules/s3-bucket-website"
@@ -124,7 +124,7 @@ module "cloudfront-distribution-website-production" {
   source = "../../modules/cloudfront-distribution-website"
 
   providers = {
-    "aws" = "aws.static-website-account"
+    aws = aws.static-website-account
   }
 
   environment = "production"
@@ -159,7 +159,7 @@ module "lambda-add-cloudfront-security-headers-production" {
   suffix = "production"
 
   providers = {
-    aws.lambda-account = "aws.static-website-account"
+    aws.lambda-account = aws.static-website-account
   }
 }
 
@@ -167,8 +167,8 @@ module "acm-production" {
   source = "github.com/morancj/terraform-aws-acm-certificate?ref=0.1.2"
 
   providers = {
-    aws.acm_account     = "aws.static-website-account"
-    aws.route53_account = "aws.acm-account"
+    aws.acm_account     = aws.static-website-account
+    aws.route53_account = aws.acm-account
   }
 
   domain_name = "production.${module.route53-zone.default["name"]}"
@@ -183,7 +183,7 @@ module "acm-production" {
 
 module "route53-records-production" {
   providers = {
-    "aws" = "aws.route53-account"
+    aws = aws.route53-account
   }
 
   source = "../../modules/route53-alias-website"

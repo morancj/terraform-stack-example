@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_cloudfront_distribution" "default" {
-  provider = "aws.static-website-account"
+  provider = aws.static-website-account
 
   lifecycle = {
     # Ignore changes to the Lambda function association as those are managed by our
@@ -18,8 +18,8 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = "${var.origin_domain_name}"
-    origin_id   = "${local.origin_id}"
+    domain_name = var.origin_domain_name
+    origin_id   = local.origin_id
     origin_path = ""
 
     custom_origin_config {
@@ -53,7 +53,7 @@ resource "aws_cloudfront_distribution" "default" {
 
   # "${local.aliases[count.index]}"
   // "${split(",", var.aliases_staging ? element(values(var.aliases_production), 0) : join(",", list(element(split(",", element(values(var.aliases_production), 0)), 0), "")))}"
-  # "${var.environments == "production" ? 
+  # "${var.environments == "production" ?
   #   "${split(",", var.prod_subnet : join(","))" :
   #   var.dev_subnet}"
 
@@ -72,7 +72,7 @@ resource "aws_cloudfront_distribution" "default" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.origin_id}"
+    target_origin_id = local.origin_id
     compress         = true
 
     forwarded_values {
@@ -84,7 +84,7 @@ resource "aws_cloudfront_distribution" "default" {
     }
 
     lambda_function_association {
-      lambda_arn = "${var.lambda_arn}"
+      lambda_arn = var.lambda_arn
 
       event_type = "origin-response"
     }
@@ -97,7 +97,7 @@ resource "aws_cloudfront_distribution" "default" {
   http_version = "http2"
   logging_config {
     include_cookies = false
-    bucket          = "${var.s3_bucket_log_bucket}"
+    bucket          = var.s3_bucket_log_bucket
 
     # environments          = "${local.environments}"
     # prefix = "cf-logs/${var.environments[count.index]}.${var.domain_name}/"
@@ -120,10 +120,10 @@ resource "aws_cloudfront_distribution" "default" {
     Name = "${var.environment}.${var.domain_name}"
 
     # Environment = "${var.environments[count.index]}"
-    Environment = "${var.environment}"
+    Environment = var.environment
   }
   viewer_certificate {
-    acm_certificate_arn      = "${var.acm_arn}"
+    acm_certificate_arn      = var.acm_arn
     minimum_protocol_version = "TLSv1.2_2018"
     ssl_support_method       = "sni-only"
   }

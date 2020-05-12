@@ -1,11 +1,11 @@
 variable "domain_name" {
-  type        = "string"
+  type        = string
   description = "Domain name, no trailing dot"
   default     = "example.org"
 }
 
 variable "names" {
-  type        = "list"
+  type        = list
   description = "EC2 Launch Template name"
 
   default = [
@@ -16,7 +16,7 @@ variable "names" {
 }
 
 variable "description" {
-  type        = "list"
+  type        = list
   description = "EC2 Launch Template description"
 
   default = [
@@ -27,7 +27,7 @@ variable "description" {
 }
 
 variable "image_id" {
-  type        = "list"
+  type        = list
   description = "AMI ID for EC2 Launch Template"
 
   default = [
@@ -40,7 +40,7 @@ variable "image_id" {
 }
 
 variable "key_name" {
-  type        = "string"
+  type        = string
   description = "EC2 SSH private key name"
 
   // FIXME: We could add a similarly-named key (e.g. `2020`) to each AWS
@@ -49,7 +49,7 @@ variable "key_name" {
 }
 
 variable "network_interface_security_groups" {
-  type        = "list"
+  type        = list
   description = "A list of Security Groups to associate with the network interface"
 
   default = [
@@ -58,14 +58,14 @@ variable "network_interface_security_groups" {
 }
 
 variable "network_interface_subnet_id" {
-  type        = "string"
+  type        = string
   description = "Subnet ID for the network interface"
 
   default = "subnet-fedcba00"
 }
 
 variable "instance_type" {
-  type        = "string"
+  type        = string
   description = "EC2 Instance Type"
   default     = "t3a.micro"
 }
