@@ -1,7 +1,6 @@
 resource "aws_route53_record" "default" {
   provider        = "aws.route53-account"
   count           = "${length(var.types)}"
-  provider        = "aws.route53-account"
   zone_id         = "${var.zone_id}"
   name            = "${var.name}"
   type            = "${element(var.types, count.index)}"
