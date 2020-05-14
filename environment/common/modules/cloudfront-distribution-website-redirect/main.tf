@@ -6,12 +6,14 @@ locals {
 }
 
 resource "aws_cloudfront_distribution" "default" {
-  lifecycle = {
+  lifecycle {
     # Ignore changes to the Lambda function association as those are managed by our
     # CI/CD process, not Terraform.
     # We can't ignore the default_cache_behavior.ID.lambda_function_association.lambda_arn directly,
     # because the value of "ID" is unpredictable (is it some hash of the ETAG?)
-    ignore_changes = "default_cache_behavior"
+    ignore_changes = [
+      default_cache_behavior
+    ]
   }
 
   origin {
@@ -36,10 +38,8 @@ resource "aws_cloudfront_distribution" "default" {
   comment = "var.domain_name var.environment redirect"
 
   // `aliases` must match `environments`, at least until I figure out iterating on this properly!
-  aliases = [
-    # var.aliases[count.index]
-    var.aliases,
-  ]
+  # var.aliases[count.index]
+  aliases = var.aliases
 
   custom_error_response {
     error_caching_min_ttl = 300
@@ -74,7 +74,7 @@ resource "aws_cloudfront_distribution" "default" {
     include_cookies = false
     bucket          = var.s3_bucket_log_bucket
 
-    # environments          = "${local.environments}"
+    # environments          = local.environments
     # prefix = "cf-logs/var.environments[count.index].var.domain_name/"
     prefix = "cf-logs/var.environment.var.domain_name/"
   }
@@ -87,7 +87,7 @@ resource "aws_cloudfront_distribution" "default" {
     }
   }
 
-  tags {
+  tags = {
     // Hyphenated form of the name
     # Name ="${replace(
     #   "${var.environments[count.index]}.${var.domain_name}",

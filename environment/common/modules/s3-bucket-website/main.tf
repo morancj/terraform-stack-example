@@ -42,7 +42,7 @@ resource "aws_s3_bucket" "default" {
     error_document = "404.html"
   }
 
-  tags {
+  tags = {
     # Name        = "${var.environments[count.index]}-${var.suffix}"
     # Environment = "${var.environments[count.index]}"
     Name = "${var.environment}-${var.suffix}"

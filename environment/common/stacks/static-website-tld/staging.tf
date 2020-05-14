@@ -3,7 +3,7 @@
 // staging/development hosting
 module "s3-bucket-website-staging" {
   providers = {
-    aws.static-website-account = aws.static-website-account
+    aws = aws.static-website-account
   }
 
   source = "../../modules/s3-bucket-website"
@@ -23,7 +23,7 @@ module "cloudfront-distribution-website-staging" {
   source = "../../modules/cloudfront-distribution-website"
 
   providers = {
-    aws.static-website-account = aws.static-website-account
+    aws = aws.static-website-account
   }
 
   environment = "staging"
@@ -57,7 +57,7 @@ module "lambda-add-cloudfront-security-headers-staging" {
   suffix = "staging"
 
   providers = {
-    aws.lambda-account = "aws.acm-account"
+    aws.lambda-account = aws.acm-account
   }
 }
 
@@ -65,8 +65,8 @@ module "acm-staging" {
   source = "../../../../../terraform-aws-acm-certificate"
 
   providers = {
-    aws.acm_account     = "aws.static-website-account"
-    aws.route53_account = "aws.acm-account"
+    aws.acm_account     = aws.static-website-account
+    aws.route53_account = aws.acm-account
   }
 
   domain_name = "staging.${module.route53-zone.default["name"]}"

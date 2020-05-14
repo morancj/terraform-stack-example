@@ -48,8 +48,8 @@ module "acm-redirect" {
   source = "../../../../../terraform-aws-acm-certificate"
 
   providers = {
-    aws.acm_account     = "aws.static-website-account"
-    aws.route53_account = "aws.acm-account"
+    aws.acm_account     = aws.static-website-account
+    aws.route53_account = aws.acm-account
   }
 
   domain_name = "redirect.${module.route53-zone.default["name"]}"
@@ -159,7 +159,7 @@ module "lambda-add-cloudfront-security-headers-production" {
   suffix = "production"
 
   providers = {
-    aws.lambda-account = "aws.static-website-account"
+    aws.lambda-account = aws.static-website-account
   }
 }
 
@@ -167,8 +167,8 @@ module "acm-production" {
   source = "../../../../../terraform-aws-acm-certificate"
 
   providers = {
-    aws.acm_account     = "aws.static-website-account"
-    aws.route53_account = "aws.acm-account"
+    aws.acm_account     = aws.static-website-account
+    aws.route53_account = aws.acm-account
   }
 
   domain_name = "production.${module.route53-zone.default["name"]}"
@@ -183,7 +183,7 @@ module "acm-production" {
 
 module "route53-records-production" {
   providers = {
-    aws.route53-account = "aws.route53-account"
+    aws.route53-account = aws.route53-account
   }
 
   source = "../../modules/route53-alias-website"

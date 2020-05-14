@@ -29,9 +29,7 @@ data "aws_iam_policy_document" "buildbot_access_s3" {
       "s3:ListBucketMultipartUploads",
     ]
 
-    resources = [
-      var.s3_buckets,
-    ]
+    resources = var.s3_buckets
   }
 
   // S3 Object-level permissions
@@ -58,9 +56,7 @@ data "aws_iam_policy_document" "buildbot_access_s3" {
       "s3:PutObjectVersionTagging",
     ]
 
-    resources = [
-      var.s3_paths,
-    ]
+    resources = var.s3_paths
   }
 }
 
@@ -128,7 +124,7 @@ data "aws_iam_policy_document" "buildbot_access_common" {
     ]
 
     resources = [
-      var.iam_role_buildbot_arn,
+      var.iam_role_buildbot_arn
     ]
   }
 }

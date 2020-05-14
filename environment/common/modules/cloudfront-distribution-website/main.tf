@@ -6,19 +6,16 @@ locals {
 
 }
 
-provider "aws" {
-  alias = "static-website-account"
-}
-
 resource "aws_cloudfront_distribution" "default" {
-  provider = "aws.static-website-account"
 
-  lifecycle = {
+  lifecycle {
     # Ignore changes to the Lambda function association as those are managed by our
     # CI/CD process, not Terraform.
     # We can't ignore the default_cache_behavior.ID.lambda_function_association.lambda_arn directly,
     # because the value of "ID" is unpredictable (is it some hash of the ETAG?)
-    ignore_changes = "default_cache_behavior"
+    ignore_changes = [
+      default_cache_behavior
+    ]
   }
 
   origin {
@@ -43,10 +40,8 @@ resource "aws_cloudfront_distribution" "default" {
   comment = "${var.domain_name} ${var.environment} website"
 
   // `aliases` must match `environments`, at least until I figure out iterating on this properly!
-  aliases = [
-    # "${var.aliases[count.index]}"
-    var.aliases,
-  ]
+  # var.aliases[count.index]
+  aliases = var.aliases
 
   # "${var.environments == "staging" ? var.aliases_staging : var.aliases_production}"
 
@@ -113,7 +108,7 @@ resource "aws_cloudfront_distribution" "default" {
       restriction_type = "none"
     }
   }
-  tags {
+  tags = {
     // Hyphenated form of the name
     # Name ="${replace(
     #   "${var.environments[count.index]}.${var.domain_name}",

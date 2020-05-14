@@ -10,16 +10,21 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+}
+
+provider "aws" {
+  alias = "account_one"
+  region = "us-east-1"
 
   assume_role {
     role_arn     = "arn:aws:iam::ACCOUNTID_one:role/ADMINISTRATIVE_ROLE"
     session_name = "Terraform-account_one_Admin"
   }
 
-  alias = "account_one"
 }
 
 provider "aws" {
+  alias = "account_two"
   region = "us-east-1"
 
   assume_role {
@@ -27,7 +32,6 @@ provider "aws" {
     session_name = "Terraform-account_two_Admin"
   }
 
-  alias = "account_two"
 }
 
 
@@ -39,12 +43,12 @@ module "example_org" {
   // Route 53 and ACM entries are in the AWS Account "account_one", while
   // everything else is in "account_two"
   providers = {
-    aws.static-website-account = "aws.account_one"
-    aws.route53-account        = "aws.account_two"
-    aws.acm-account            = "aws.account_two"
-    aws.lambda-account         = "aws.account_one"
-    aws.iam-account            = "aws.account_one"
-    aws.git-account            = "aws.account_one"
+    aws.static-website-account = aws.account_one
+    aws.route53-account        = aws.account_two
+    aws.acm-account            = aws.account_two
+    aws.lambda-account         = aws.account_one
+    aws.iam-account            = aws.account_one
+    aws.git-account            = aws.account_one
   }
 
   // Variables
@@ -65,7 +69,7 @@ module "example_org" {
 
 module "account_one" {
   providers = {
-    aws = "aws.account_one"
+    aws = aws.account_one
   }
 
   source = "./account/common"
@@ -73,7 +77,7 @@ module "account_one" {
 
 module "account_two" {
   providers = {
-    aws = "aws.account_two"
+    aws = aws.account_two
   }
 
   source = "./account/account_two"
