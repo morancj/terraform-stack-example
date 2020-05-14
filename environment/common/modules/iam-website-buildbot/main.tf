@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "buildbot_trust_relationship" {
 
     principals {
       type        = "aws"
-      identifiers = ["${var.iam_role_buildbot_arn}"]
+      identifiers = [var.iam_role_buildbot_arn]
     }
   }
 }
@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "buildbot_access_s3" {
     ]
 
     resources = [
-      "${var.s3_buckets}",
+      var.s3_buckets,
     ]
   }
 
@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "buildbot_access_s3" {
     ]
 
     resources = [
-      "${var.s3_paths}",
+      var.s3_paths,
     ]
   }
 }
@@ -128,7 +128,7 @@ data "aws_iam_policy_document" "buildbot_access_common" {
     ]
 
     resources = [
-      "${var.iam_role_buildbot_arn}",
+      var.iam_role_buildbot_arn,
     ]
   }
 }

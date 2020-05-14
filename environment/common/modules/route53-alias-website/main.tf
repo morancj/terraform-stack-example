@@ -1,5 +1,9 @@
+provider "aws" {
+  alias = "route53-account"
+}
+
 resource "aws_route53_record" "default" {
-  provider        = aws.route53-account
+  provider        = "aws.route53-account"
   count           = length(var.types)
   zone_id         = var.zone_id
   name            = var.name

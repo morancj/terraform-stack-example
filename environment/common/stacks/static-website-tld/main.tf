@@ -10,8 +10,8 @@ module "route53-zone" {
   source = "../../modules/route53-zone"
 
   // `environments` would always be `production`
-  name    = "${var.aws_route53_zone["name"]}"
-  comment = "${var.aws_route53_zone["comment"]}"
+  name    = var.aws_route53_zone["name"]
+  comment = var.aws_route53_zone["comment"]
 }
 
 module "s3-bucket-log-bucket" {
@@ -22,7 +22,7 @@ module "s3-bucket-log-bucket" {
   source = "../../modules/s3-bucket-log-bucket"
 
   // `environments` would always be `production`
-  s3_bucket_log_bucket = "${var.s3_bucket_log_bucket}"
+  s3_bucket_log_bucket = var.s3_bucket_log_bucket
 }
 
 module "iam-website-buildbot" {
@@ -36,8 +36,8 @@ module "iam-website-buildbot" {
   iam_role_buildbot_arn  = "arn:aws:iam::ACCOUNTID_two:role/CI_CD_Role"
 
   s3_buckets = [
-    "${module.s3-bucket-website-staging.arn}",
-    "${module.s3-bucket-website-production.arn}",
+    module.s3-bucket-website-staging.arn,
+    module.s3-bucket-website-production.arn,
   ]
 
   s3_paths = [

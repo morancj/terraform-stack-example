@@ -15,8 +15,8 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = "${var.origin_domain_name}"
-    origin_id   = "${local.origin_id}"
+    domain_name = var.origin_domain_name
+    origin_id   = local.origin_id
     origin_path = ""
 
     custom_origin_config {
@@ -32,13 +32,13 @@ resource "aws_cloudfront_distribution" "default" {
   enabled         = true
   is_ipv6_enabled = true
 
-  # comment         = "${var.domain_name} ${var.environments[count.index]} website"
-  comment = "${var.domain_name} ${var.environment} redirect"
+  # comment         = "var.domain_name var.environments[count.index] website"
+  comment = "var.domain_name var.environment redirect"
 
   // `aliases` must match `environments`, at least until I figure out iterating on this properly!
   aliases = [
-    # "${var.aliases[count.index]}"
-    "${var.aliases}",
+    # var.aliases[count.index]
+    var.aliases,
   ]
 
   custom_error_response {
@@ -51,7 +51,7 @@ resource "aws_cloudfront_distribution" "default" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.origin_id}"
+    target_origin_id = local.origin_id
     compress         = true
 
     forwarded_values {
@@ -72,11 +72,11 @@ resource "aws_cloudfront_distribution" "default" {
 
   logging_config {
     include_cookies = false
-    bucket          = "${var.s3_bucket_log_bucket}"
+    bucket          = var.s3_bucket_log_bucket
 
     # environments          = "${local.environments}"
-    # prefix = "cf-logs/${var.environments[count.index]}.${var.domain_name}/"
-    prefix = "cf-logs/${var.environment}.${var.domain_name}/"
+    # prefix = "cf-logs/var.environments[count.index].var.domain_name/"
+    prefix = "cf-logs/var.environment.var.domain_name/"
   }
 
   price_class = "PriceClass_All"
@@ -94,15 +94,15 @@ resource "aws_cloudfront_distribution" "default" {
     #   ".",
     #   "-")
     #   }"
-    # Name = "${var.environments[count.index]}.${var.domain_name}"
-    Name = "${var.environment}.${var.domain_name}"
+    # Name = "var.environments[count.index].var.domain_name"
+    Name = "var.environment.var.domain_name"
 
     # Environment = "${var.environments[count.index]}"
-    Environment = "${var.environment}"
+    Environment = var.environment
   }
 
   viewer_certificate {
-    acm_certificate_arn      = "${var.acm_arn}"
+    acm_certificate_arn      = "var.acm_arn"
     minimum_protocol_version = "TLSv1.2_2018"
     ssl_support_method       = "sni-only"
   }

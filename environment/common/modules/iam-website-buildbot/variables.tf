@@ -1,10 +1,10 @@
 variable "s3_buckets" {
-  type        = list
+  type        = list(string)
   description = "List of S3 website hosting buckets to which we will permit access."
 }
 
 variable "s3_paths" {
-  type        = list
+  type        = list(string)
   description = "List of S3 website hosting bucket objects to which we will permit access."
 }
 

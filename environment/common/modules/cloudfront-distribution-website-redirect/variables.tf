@@ -7,13 +7,13 @@ variable "environment" {
 // Comment can be derived from environment, but can't because
 # // we're using Terraform < 0.12
 # variable "comment" {
-#   type = list
+#   type = list(string)
 # }
 
 // This could be a map after the Terraform 0.12 upgrade
 variable "aliases" {
   # type = map
-  type        = list
+  type        = list(string)
   description = "Alternate names this CloudFront Web Distribution should serve."
 }
 

@@ -6,8 +6,12 @@ locals {
 
 }
 
+provider "aws" {
+  alias = "static-website-account"
+}
+
 resource "aws_cloudfront_distribution" "default" {
-  provider = aws.static-website-account
+  provider = "aws.static-website-account"
 
   lifecycle = {
     # Ignore changes to the Lambda function association as those are managed by our
@@ -41,7 +45,7 @@ resource "aws_cloudfront_distribution" "default" {
   // `aliases` must match `environments`, at least until I figure out iterating on this properly!
   aliases = [
     # "${var.aliases[count.index]}"
-    "${var.aliases}",
+    var.aliases,
   ]
 
   # "${var.environments == "staging" ? var.aliases_staging : var.aliases_production}"

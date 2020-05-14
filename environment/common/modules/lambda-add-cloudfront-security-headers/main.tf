@@ -1,6 +1,5 @@
 // Trust Lambda, Lambda@Edge
 data "aws_iam_policy_document" "iam_for_lambda_trust" {
-  provider = aws.lambda-account
 
   statement {
     actions = ["sts:AssumeRole"]
@@ -17,7 +16,6 @@ data "aws_iam_policy_document" "iam_for_lambda_trust" {
 }
 
 resource "aws_iam_role" "lambda_cloudfront" {
-  provider           = aws.lambda-account
   name               = "AssumeRole-lambda_cloudfront-${var.suffix}"
   description        = "Used by CloudFront for Lambda@Edge"
   assume_role_policy = data.aws_iam_policy_document.iam_for_lambda_trust.json
@@ -26,20 +24,16 @@ resource "aws_iam_role" "lambda_cloudfront" {
 
 // Allow Lambda function execution
 resource "aws_iam_role_policy_attachment" "lambda_cloudfront_execution" {
-  provider   = aws.lambda-account
   role       = aws_iam_role.lambda_cloudfront.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_cloudfront_xray" {
-  provider   = aws.lambda-account
   role       = aws_iam_role.lambda_cloudfront.name
   policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 }
 
 resource "aws_lambda_function" "cloudfront-add-security-headers" {
-  provider = aws.lambda-account
-
   // Use paths relative to the Terraform repo root, or the full path
   // (e.g. "/home/user/Git/Terraform/...") will be written to the state file.
   filename = "environment/common/modules/lambda-add-cloudfront-security-headers/cloudfront-add-security-headers.zip"

@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "default" {
   acl    = "private"
 
   logging {
-    target_bucket = "${var.s3_bucket_log_bucket}"
+    target_bucket = var.s3_bucket_log_bucket
     target_prefix = "s3-logs/redirect-${var.suffix}/"
   }
 

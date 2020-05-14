@@ -5,7 +5,7 @@ variable "domain_name" {
 }
 
 variable "names" {
-  type        = list
+  type        = list(string)
   description = "EC2 Launch Template name"
 
   default = [
@@ -16,7 +16,7 @@ variable "names" {
 }
 
 variable "description" {
-  type        = list
+  type        = list(string)
   description = "EC2 Launch Template description"
 
   default = [
@@ -27,7 +27,7 @@ variable "description" {
 }
 
 variable "image_id" {
-  type        = list
+  type        = list(string)
   description = "AMI ID for EC2 Launch Template"
 
   default = [
@@ -49,7 +49,7 @@ variable "key_name" {
 }
 
 variable "network_interface_security_groups" {
-  type        = list
+  type        = list(string)
   description = "A list of Security Groups to associate with the network interface"
 
   default = [

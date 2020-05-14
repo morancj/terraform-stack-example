@@ -42,6 +42,6 @@ variable "s3_bucket_log_bucket" {
 }
 
 locals {
-  route53_zone_name_hyphenated = "${replace(var.aws_route53_zone["name"], ".", "-")}"
+  route53_zone_name_hyphenated = replace(var.aws_route53_zone["name"], ".", "-")
   description                  = "Zone name, periods replaced with hyphens. Used for e.g. S3 bucket naming. Don't add a trailing period/dot (`.`) to the parent variable's `name`!"
 }

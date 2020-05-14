@@ -32,7 +32,7 @@ provider "aws" {
 
 
 // Zone-Apex-Domain static website infrastructure
-module "example_net" {
+module "example_org" {
   // Must pass all used providers, see:
   // https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
   // For this example,
@@ -50,17 +50,17 @@ module "example_net" {
   // Variables
   source = "./environment/common/stacks/static-website-tld/"
 
-  aws_route53_zone {
-    name    = "example.net"
+  aws_route53_zone = {
+    name    = "example.org"
     comment = "Managed by Terraform"
   }
 
   // Either re-use an existing shared logging bucket
-  // s3_bucket_log_bucket = "${aws_s3_bucket.my-bucket-name.id}"
+  // s3_bucket_log_bucket = aws_s3_bucket.my-bucket-name.id
 
   // Otherwise, you may want to create an S3 bucket
   # s3_bucket_log_bucket = "logs-${replace(var.aws_route53_zone["name"], ".", "-")}"
-  s3_bucket_log_bucket = "logs-example-net"
+  s3_bucket_log_bucket = "logs-example-org"
 }
 
 module "account_one" {

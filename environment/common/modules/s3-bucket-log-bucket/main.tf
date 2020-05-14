@@ -1,6 +1,6 @@
 // Config for website (S3 & CloudFront) logging.
 resource "aws_s3_bucket" "default" {
-  bucket = "${var.s3_bucket_log_bucket}"
+  bucket = var.s3_bucket_log_bucket
   acl    = "log-delivery-write"
 
   lifecycle_rule {
@@ -18,8 +18,8 @@ resource "aws_s3_bucket" "default" {
     }
   }
 
-  tags {
-    Name        = "${var.s3_bucket_log_bucket}"
+  tags = {
+    Name        = var.s3_bucket_log_bucket
     Environment = "production"
   }
 }

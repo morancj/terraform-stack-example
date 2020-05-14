@@ -28,10 +28,10 @@ resource "aws_s3_bucket" "default" {
 
   # policy = "${element(data.aws_iam_policy_document.json, count.index)}"
   # policy = "${element(data.aws_iam_policy_document.default.*.json, count.index)}"
-  policy = "${data.aws_iam_policy_document.default.json}"
+  policy = data.aws_iam_policy_document.default.json
 
   logging {
-    target_bucket = "${var.s3_bucket_log_bucket}"
+    target_bucket = var.s3_bucket_log_bucket
 
     # target_prefix = "s3-logs/${var.environments[count.index]}-${var.suffix}/"
     target_prefix = "s3-logs/${var.environment}-${var.suffix}/"
@@ -47,6 +47,6 @@ resource "aws_s3_bucket" "default" {
     # Environment = "${var.environments[count.index]}"
     Name = "${var.environment}-${var.suffix}"
 
-    Environment = "${var.environment}"
+    Environment = var.environment
   }
 }
