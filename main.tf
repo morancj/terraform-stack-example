@@ -12,12 +12,27 @@ provider "aws" {
   region = "us-east-1"
 }
 
+variable "ACCOUNTID_one" {
+  type = string
+  description = "First AWS Account ID"
+}
+
+variable "ACCOUNTID_two" {
+  type = string
+  description = "Second AWS Account ID"
+}
+
+variable "ADMINISTRATIVE_ROLE" {
+  type = string
+  description = "AWS IAM Role for Terraform to assume"
+}
+
 provider "aws" {
   alias = "account_one"
   region = "us-east-1"
 
   assume_role {
-    role_arn     = "arn:aws:iam::ACCOUNTID_one:role/ADMINISTRATIVE_ROLE"
+    role_arn     = "arn:aws:iam::${var.ACCOUNTID_one}:role/${var.ADMINISTRATIVE_ROLE}"
     session_name = "Terraform-account_one_Admin"
   }
 
@@ -28,7 +43,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn     = "arn:aws:iam::ACCOUNTID_two:role/ADMINISTRATIVE_ROLE"
+    role_arn     = "arn:aws:iam::${var.ACCOUNTID_two}:role/${var.ADMINISTRATIVE_ROLE}"
     session_name = "Terraform-account_two_Admin"
   }
 
