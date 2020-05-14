@@ -62,7 +62,7 @@ module "lambda-add-cloudfront-security-headers-staging" {
 }
 
 module "acm-staging" {
-  source = "../../../../../terraform-aws-acm-certificate"
+  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
 
   providers = {
     aws.acm_account     = aws.static-website-account
