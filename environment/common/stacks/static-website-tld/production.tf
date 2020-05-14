@@ -46,6 +46,8 @@ module "cloudfront-distribution-website-redirect" {
 
 module "acm-redirect" {
   source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
+// for hacking:
+//  source = "../../../../../terraform-aws-acm-certificate"
 
   providers = {
     aws.acm_account     = aws.static-website-account
@@ -165,6 +167,8 @@ module "lambda-add-cloudfront-security-headers-production" {
 
 module "acm-production" {
   source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
+// for hacking:
+//  source = "../../../../../terraform-aws-acm-certificate"
 
   providers = {
     aws.acm_account     = aws.static-website-account
