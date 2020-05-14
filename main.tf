@@ -12,6 +12,8 @@ provider "aws" {
   region = "us-east-1"
 }
 
+// All these account ID's may be the same! However, specifying them seperately
+// enables this demo to support multiple AWS Accounts
 variable "ACCOUNTID_one" {
   type = string
   description = "First AWS Account ID"
@@ -20,6 +22,21 @@ variable "ACCOUNTID_one" {
 variable "ACCOUNTID_two" {
   type = string
   description = "Second AWS Account ID"
+}
+
+variable "ACCOUNTID_three" {
+  type = string
+  description = "Third AWS Account ID"
+}
+
+//variable "IAM_ROLE_BUILDBOT_ARN" {
+//  type = string
+//  description = "ARN for CI/CD build bot Role"
+//  default = "arn:aws:iam::${var.ACCOUNTID_three}:role/CI_CD_BuildBot_Role"
+//}
+
+locals {
+  IAM_ROLE_BUILDBOT_ARN = "arn:aws:iam::${var.ACCOUNTID_three}:role/CI_CD_BuildBot_Role"
 }
 
 variable "ADMINISTRATIVE_ROLE" {
@@ -80,6 +97,7 @@ module "example_org" {
   // Otherwise, you may want to create an S3 bucket
   # s3_bucket_log_bucket = "logs-${replace(var.aws_route53_zone["name"], ".", "-")}"
   s3_bucket_log_bucket = "logs-example-org"
+  IAM_ROLE_BUILDBOT_ARN = local.IAM_ROLE_BUILDBOT_ARN
 }
 
 module "account_one" {
