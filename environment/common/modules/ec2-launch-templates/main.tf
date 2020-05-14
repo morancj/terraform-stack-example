@@ -1,12 +1,3 @@
-data "template_file" "user_data" {
-  count    = length(var.names)
-  template = file("${path.module}/templates/user_data.tpl")
-
-  vars = {
-    fqdn = format("%s%s%s", var.names[count.index], ".", var.domain_name)
-  }
-}
-
 resource "aws_launch_template" "default" {
   count                   = length(var.names)
   name                    = var.names[count.index]
@@ -64,5 +55,7 @@ resource "aws_launch_template" "default" {
     }
   }
 
-  user_data = base64encode(data.template_file.user_data.*.rendered[count.index])
+  user_data = base64encode(templatefile("${path.module}/templates/user_data.tpl", {
+    fqdn = format("%s%s%s", var.names[count.index], ".", var.domain_name)
+  }))
 }
