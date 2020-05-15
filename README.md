@@ -150,6 +150,17 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 ```
+
 _...snip..._
 
-Here, Terraform should output the list of resources (infrastructure entities) to create. If all looks good, run `terraform plan --`
+```
+Plan: 52 to add, 0 to change, 0 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an "-out" parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+"terraform apply" is subsequently run.
+```
+
+Here, Terraform should output the list of resources (infrastructure entities) to create. If all looks good, run `terraform plan -out MyStaticWebsiteDomain.plan`, then `terraform apply MyStaticWebsiteDomain.plan`. On an empty account, the `plan` run should take less than ten minutes. The `apply` run can be much slower (largely depending on AWS): in particular, S3 bucket, Amazon Certificate Manager (ACM) and CloudFront operations can take tens of minutes each. On a ~100Mbps link with latency to the nearest AWS API endpoint of <30ms, the `apply` run should take less than thirty minutes.
