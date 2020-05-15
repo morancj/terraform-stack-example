@@ -45,7 +45,7 @@ variable "key_name" {
 
   // FIXME: We could add a similarly-named key (e.g. `2020`) to each AWS
   // Account for convenience, or simply pass them to the module
-  default = "account_ones-2017b"
+  default = "EC2_2020"
 }
 
 variable "network_interface_security_groups" {
