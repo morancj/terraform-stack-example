@@ -7,7 +7,7 @@
 module "ec2_instance_launch_templates" {
   source = "../../environment/common/modules/ec2-launch-templates"
 
-  key_name = "account_two_key"
+  key_name = var.key_name
 
   network_interface_security_groups = [
     // Some SG ID
