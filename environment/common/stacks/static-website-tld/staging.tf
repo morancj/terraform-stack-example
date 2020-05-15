@@ -62,7 +62,7 @@ module "lambda-add-cloudfront-security-headers-staging" {
 }
 
 module "acm-staging" {
-  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
+  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.1"
 // for hacking:
 //  source = "../../../../../terraform-aws-acm-certificate"
 

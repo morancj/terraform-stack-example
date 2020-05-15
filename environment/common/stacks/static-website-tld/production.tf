@@ -45,7 +45,7 @@ module "cloudfront-distribution-website-redirect" {
 }
 
 module "acm-redirect" {
-  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
+  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.1"
 // for hacking:
 //  source = "../../../../../terraform-aws-acm-certificate"
 
@@ -166,7 +166,7 @@ module "lambda-add-cloudfront-security-headers-production" {
 }
 
 module "acm-production" {
-  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.0"
+  source = "github.com/morancj/terraform-aws-acm-certificate?ref=1.0.1"
 // for hacking:
 //  source = "../../../../../terraform-aws-acm-certificate"
 

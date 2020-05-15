@@ -41,6 +41,11 @@ variable "s3_bucket_log_bucket" {
   description = "S3 bucket for receiving access logs"
 }
 
+variable "IAM_ROLE_BUILDBOT_ARN" {
+  type        = string
+  description = "ARN for CI/CD build bot Role"
+}
+
 locals {
   route53_zone_name_hyphenated = replace(var.aws_route53_zone["name"], ".", "-")
   description                  = "Zone name, periods replaced with hyphens. Used for e.g. S3 bucket naming. Don't add a trailing period/dot (`.`) to the parent variable's `name`!"

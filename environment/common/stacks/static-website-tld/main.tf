@@ -33,7 +33,7 @@ module "iam-website-buildbot" {
   source = "../../modules/iam-website-buildbot"
 
   iam_role_buildbot_name = "${replace(var.aws_route53_zone["name"], ".", "-")}-buildbot"
-  iam_role_buildbot_arn  = "arn:aws:iam::ACCOUNTID_two:role/CI_CD_Role"
+  iam_role_buildbot_arn  = var.IAM_ROLE_BUILDBOT_ARN
 
   s3_buckets = [
     module.s3-bucket-website-staging.arn,
