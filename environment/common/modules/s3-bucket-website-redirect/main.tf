@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "default" {
   acl    = "private"
 
   logging {
-    target_bucket = "${var.s3_bucket_log_bucket}"
+    target_bucket = var.s3_bucket_log_bucket
     target_prefix = "s3-logs/redirect-${var.suffix}/"
   }
 
@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "default" {
     redirect_all_requests_to = "https://www.${var.route53_zone}"
   }
 
-  tags {
+  tags = {
     Name        = "redirect-${var.suffix}"
     Environment = "production"
   }

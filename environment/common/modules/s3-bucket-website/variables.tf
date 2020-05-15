@@ -1,6 +1,6 @@
 // This should be a list after the Terraform 0.12 upgrade
 variable "environment" {
-  type = "string"
+  type = string
 
   default     = "staging"
   description = "Used primarily to identify resources."

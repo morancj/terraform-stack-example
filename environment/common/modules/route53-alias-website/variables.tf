@@ -7,7 +7,7 @@ variable "name" {
 }
 
 variable "types" {
-  type = "list"
+  type = list(string)
 
   default = [
     "A",
